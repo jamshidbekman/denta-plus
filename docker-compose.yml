@@ -6,12 +6,9 @@ services:
     container_name: denta-plus
     restart: always
     ports:
-      - '4001:3000'
+      - '4001:4000'
     env_file:
       - .env
-    depends_on:
-      - postgres
-      - redis
     networks:
       - existing-network
 
