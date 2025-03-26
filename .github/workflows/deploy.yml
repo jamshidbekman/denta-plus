@@ -31,37 +31,37 @@ jobs:
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/denta-plus:buildcache,mode=max
 
       - name: Deploy to Ubuntu Server
-  uses: appleboy/ssh-action@master
-  with:
-    host: ${{ secrets.SERVER_HOST }}
-    username: ${{ secrets.SERVER_USER }}
-    key: ${{ secrets.SERVER_SSH_KEY }}
-    script: |
-      # Network yaratish (agar mavjud bo'lmasa)
-      docker network create existing-network || true
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            # Network yaratish (agar mavjud bo'lmasa)
+            docker network create existing-network || true
 
-      # Qolgan deploy skripti o'zgarmaydi
-      cd ~/denta-plus || mkdir -p ~/denta-plus && cd ~/denta-plus
+            # Qolgan deploy skripti o'zgarmaydi
+            cd ~/denta-plus || mkdir -p ~/denta-plus && cd ~/denta-plus
 
-      # Docker Compose faylini yaratish
-      cat > docker-compose.yml << EOL
-      version: '3'
-      services:
-        app:
-          image: ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
-          container_name: denta-plus
-          restart: always
-          ports:
-            - '4001:4000'
-          env_file:
-            - .env
-          networks:
-            - existing-network
+            # Docker Compose faylini yaratish
+            cat > docker-compose.yml << EOL
+            version: '3'
+            services:
+              app:
+                image: ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
+                container_name: denta-plus
+                restart: always
+                ports:
+                  - '4001:4000'
+                env_file:
+                  - .env
+                networks:
+                  - existing-network
 
-      networks:
-        existing-network:
-          external: true
-      EOL
+            networks:
+              existing-network:
+                external: true
+            EOL
 
             # Eski konteynerlarni to'xtatish
             docker-compose down
