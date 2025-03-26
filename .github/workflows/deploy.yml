@@ -11,16 +11,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -29,7 +29,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/denta-plus:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/denta-plus:buildcache,mode=max
-      
+
       - name: Deploy to Ubuntu Server
         uses: appleboy/ssh-action@master
         with:
@@ -37,36 +37,45 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # Loyihaning ishchi katalogiga o‘tish
+            # Loyihaning ishchi katalogiga o'tish
             cd ~/denta-plus || mkdir -p ~/denta-plus && cd ~/denta-plus
-            
-            # Git-dan oxirgi versiyani olish
-            if [ -d .git ]; then
-              git reset --hard origin/main
-              git pull origin main
-            fi
-            
-            # Docker konteynerlarini to‘xtatish va eski versiyalarni o‘chirish
-            if [ -f docker-compose.yml ]; then
-              docker-compose down
-            fi
-            
-            # Eng so‘nggi Docker imagelarini olish
-            docker pull ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
-            
+
+            # Docker Compose faylini yaratish
+            cat > docker-compose.yml << EOL
+            version: '3'
+            services:
+              app:
+                image: \$${DOCKER_USERNAME}/denta-plus:latest
+                container_name: denta-plus
+                restart: always
+                ports:
+                  - '4001:4000'
+                env_file:
+                  - .env
+                networks:
+                  - existing-network
+
+            networks:
+              existing-network:
+                external: true
+            EOL
+
+            # Eski konteynerlarni to'xtatish
+            docker-compose down
+
             # .env faylini yangilash
             printf "%s" "${{ secrets.ENV_FILE }}" > .env
-            
-            # docker-compose.yml faylini mavjud fayl bilan almashtirmaslik!
-            echo "docker-compose.yml serverda eskisidan foydalanmoqda."
 
-            # Docker konteynerlarini ishga tushirish (Postgres va Redisni o'zgartirmaslik)
+            # Eng so'nggi Docker imagelarini olish
+            docker pull ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
+
+            # Konteynerlarni ishga tushirish
             docker-compose up -d --remove-orphans
-            
-            # Diskda bo‘sh joy ochish
+
+            # Diskda bo'sh joy ochish
             docker image prune -a -f --filter "until=24h"
-            
+
             # Servislar holatini tekshirish
             sleep 15
-            docker ps --filter "name=denta-plus"
-            docker logs --tail=30 -f denta-plus
+            docker ps
+            docker logs --tail=30 denta-plus
