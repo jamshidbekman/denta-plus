@@ -37,52 +37,36 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # Application directory
-            mkdir -p ~/denta-plus
-            cd ~/denta-plus
+            # Loyihaning ishchi katalogiga o‘tish
+            cd ~/denta-plus || mkdir -p ~/denta-plus && cd ~/denta-plus
             
-            # Pull the latest image
-            docker pull ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
+            # Git-dan oxirgi versiyani olish
+            if [ -d .git ]; then
+              git reset --hard origin/main
+              git pull origin main
+            fi
             
-            # Stop and remove current container if exists
+            # Docker konteynerlarini to‘xtatish va eski versiyalarni o‘chirish
             if [ -f docker-compose.yml ]; then
               docker-compose down
             fi
             
-            # Create .env file from GitHub secret
+            # Eng so‘nggi Docker imagelarini olish
+            docker pull ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
+            
+            # .env faylini yangilash
             printf "%s" "${{ secrets.ENV_FILE }}" > .env
             
-            # Create or update docker-compose.yml
-            cat > docker-compose.yml << 'EOL'
-            version: '3'
+            # docker-compose.yml faylini mavjud fayl bilan almashtirmaslik!
+            echo "docker-compose.yml serverda eskisidan foydalanmoqda."
 
-            services:
-              app:
-                image: ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
-                container_name: denta-plus
-                restart: always
-                ports:
-                  - '4001:3000'
-                env_file:
-                  - .env
-                depends_on:
-                  - postgres
-                  - redis
-                networks:
-                  - existing-network
-
-            networks:
-              existing-network:
-                external: true
-            EOL
-            
-            # Start the application
+            # Docker konteynerlarini ishga tushirish (Postgres va Redisni o'zgartirmaslik)
             docker-compose up -d --remove-orphans
             
-            # Prune unused images to save disk space
+            # Diskda bo‘sh joy ochish
             docker image prune -a -f --filter "until=24h"
             
-            # Check if application started successfully
+            # Servislar holatini tekshirish
             sleep 15
             docker ps --filter "name=denta-plus"
             docker logs --tail=30 -f denta-plus

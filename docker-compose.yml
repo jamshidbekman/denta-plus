@@ -2,16 +2,19 @@ version: '3'
 
 services:
   app:
-    image: jamshidbekmansurov/denta-plus:latest
-    container_name: denta_plus
+    image: ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
+    container_name: denta-plus
     restart: always
     ports:
-      - '4001:4000'
+      - '4001:3000'
     env_file:
       - .env
+    depends_on:
+      - postgres
+      - redis
     networks:
-      - common-network
+      - existing-network
 
 networks:
-  common-network:
+  existing-network:
     external: true
