@@ -45,7 +45,7 @@ jobs:
             version: '3'
             services:
               app:
-                image: \$${DOCKER_USERNAME}/denta-plus:latest
+                image: ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
                 container_name: denta-plus
                 restart: always
                 ports:
