@@ -2,18 +2,13 @@ version: '3'
 
 services:
   app:
-    image: jamshidbekmansurov/smart-start:latest
-    container_name: denta-plus
+    image: jamshidbekmansurov/denta-plus:latest
+    container_name: denta_plus
     restart: always
     ports:
       - '4001:4000'
     env_file:
       - .env
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
     networks:
       - common-network
 
