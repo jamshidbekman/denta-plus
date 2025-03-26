@@ -1,0 +1,8 @@
+{
+  "NOT_EMPTY": "{property} bo'sh bo'lmasligi kerak",
+  "INVALID_PHONE_NUMBER": "Telefon raqami noto‘g‘ri! Faqat O‘zbekistan raqamlari qabul qilinadi.",
+  "INVALID_EMAIL": "Email pochta to'g'ri formatda kiritilmagan",
+  "USER_ALREADY_EXISTS": "Bu {property} allaqachon mavjud!",
+  "INVALID_FORMAT": "{property} to'g'ri formatda kiritilmagan!",
+  "ALREADY_EXISTS": "Bu {property} allaqachon mavjud!"
+}

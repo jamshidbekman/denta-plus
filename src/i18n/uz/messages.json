@@ -1,0 +1,10 @@
+{
+  "EMAIL_CONFIRMATION_SENT": "Tasdiqlash kodi emailingizga yuborildi.",
+  "OTP_EXPIRED": "Tasdiqlash kodi noto‘g‘ri.",
+  "OTP_CONFIRMED": "Tasdiqlash kodi to‘g‘ri. Siz muvaffaqiyatli tasdiqlandingiz!",
+  "EMAIL_NOT_VERIFIED": "Sizning emailingiz hali tasdiqlanmagan. Iltimos, emailingizni tasdiqlang.",
+  "EMAIL_VERIFIED": "Emailingiz muvaffaqiyatli tasdiqlandi!",
+  "REGISTRATION_SUCCESS": "Siz muvaffaqiyatli ro‘yxatdan o‘tdingiz! Xush kelibsiz!",
+  "USER_NOT_REGISTERED": "Siz ro‘yxatdan o‘tmagansiz. Iltimos, avval ro‘yxatdan o‘ting.",
+  "LOGIN_SUCCESS": "Siz muvaffaqiyatli tizimga kirdingiz."
+}
