@@ -62,7 +62,7 @@ jobs:
                 container_name: new_project
                 restart: always
                 ports:
-                  - '4000:4000'
+                  - '3000:3000'
                 env_file:
                   - .env
                 depends_on:
