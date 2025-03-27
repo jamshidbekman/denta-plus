@@ -14,9 +14,6 @@ export class Patient {
   @PrimaryGeneratedColumn('increment')
   id: string;
 
-  @Column({ unique: true, length: 20 })
-  username: string;
-
   @Column({ length: 50 })
   fullName: string;
 

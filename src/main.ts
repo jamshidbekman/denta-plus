@@ -4,6 +4,7 @@ import { I18nValidationPipe, I18nValidationExceptionFilter } from 'nestjs-i18n';
 import { useContainer } from 'class-validator';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +24,15 @@ async function bootstrap() {
       // detailedErrors: true,
     }),
   );
+
+  const config = new DocumentBuilder()
+    .setTitle('Denta Plus')
+    .setDescription('Denta Plus API documentation')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/api', app, document);
 
   const configService = app.get(ConfigService);
   const PORT = configService.get('PORT') ?? 3000;

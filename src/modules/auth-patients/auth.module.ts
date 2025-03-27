@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { AuthPatientsService } from './auth.service';
+import { AuthPatientsController } from './auth.controller';
 import { PatientsModule } from '../patients/patients.module';
 import { MailService } from './mail.service';
-import { RedisService } from './redis.service';
-import { JwtService } from '@nestjs/jwt';
+import { RedisService } from '../redis/redis.service';
+import { RedisModule } from '../redis/redis.module';
+import { SmsModule } from '../sms/sms.module';
+import { SmsService } from '../sms/sms.service';
 
 @Module({
-  imports: [PatientsModule],
-  controllers: [AuthController],
-  providers: [AuthService, MailService, RedisService],
+  imports: [PatientsModule, RedisModule, SmsModule],
+  controllers: [AuthPatientsController],
+  providers: [AuthPatientsService, MailService, RedisService, SmsService],
 })
-export class AuthModule {}
+export class AuthPatientsModule {}

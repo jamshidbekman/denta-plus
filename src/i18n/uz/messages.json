@@ -1,10 +1,17 @@
 {
   "EMAIL_CONFIRMATION_SENT": "Tasdiqlash kodi emailingizga yuborildi.",
-  "OTP_EXPIRED": "Tasdiqlash kodi noto‘g‘ri.",
+  "PHONE_CONFIRMATION_SENT": "Tasdiqlash kodi telefon raqamingizga yuborildi.",
+  "PHONE_NUMBER_ALREADY_EXISTS": "Bu telefon raqami bilan allaqachon ro‘yxatdan o‘tilgan. Iltimos, login qiling.",
+  "OTP_NOT_REQUESTED": "Tasdiqlash kodini olish uchun avval so‘rov yuboring.",
+  "OTP_EXPIRED": "Tasdiqlash kodi eskirgan, iltimos qaytadan urinib ko‘ring.",
+  "OTP_INCORRECT": "Tasdiqlash kodi noto‘g‘ri.",
   "OTP_CONFIRMED": "Tasdiqlash kodi to‘g‘ri. Siz muvaffaqiyatli tasdiqlandingiz!",
   "EMAIL_NOT_VERIFIED": "Sizning emailingiz hali tasdiqlanmagan. Iltimos, emailingizni tasdiqlang.",
+  "PHONE_NOT_VERIFIED": "Sizning telefon raqamingiz hali tasdiqlanmagan. Iltimos, telefon raqamingizni tasdiqlang.",
   "EMAIL_VERIFIED": "Emailingiz muvaffaqiyatli tasdiqlandi!",
+  "PHONE_VERIFIED": "Telefon raqamingiz muvaffaqiyatli tasdiqlandi!",
   "REGISTRATION_SUCCESS": "Siz muvaffaqiyatli ro‘yxatdan o‘tdingiz! Xush kelibsiz!",
   "USER_NOT_REGISTERED": "Siz ro‘yxatdan o‘tmagansiz. Iltimos, avval ro‘yxatdan o‘ting.",
+  "USER_PHONE_NOT_REGISTERED": "Sizning telefon raqamingiz ro‘yxatdan o‘tmagan. Iltimos, avval ro‘yxatdan o‘ting.",
   "LOGIN_SUCCESS": "Siz muvaffaqiyatli tizimga kirdingiz."
 }

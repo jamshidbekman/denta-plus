@@ -16,33 +16,20 @@ export class PatientsService {
   async findByEmail(email: string) {
     return await this.patientRepository.findOne({ where: { email: email } });
   }
+  async findByPhoneNumber(phoneNumber: string) {
+    return await this.patientRepository.findOne({
+      where: { phoneNumber: phoneNumber },
+    });
+  }
 
   async createPatient(createPatientDto: CreatePatientDto) {
     const findPatient = await this.patientRepository.findOne({
-      where: [
-        { username: createPatientDto.username },
-        { phoneNumber: createPatientDto.phoneNumber },
-        { email: createPatientDto.email },
-      ],
+      where: { phoneNumber: createPatientDto.phoneNumber },
     });
     const i18n = I18nContext.current();
-    if (findPatient?.username === createPatientDto.username) {
+    if (findPatient?.phoneNumber == createPatientDto.phoneNumber) {
       throw new BadRequestException(
-        i18n?.t('validation.ALREADY_EXISTS', {
-          args: { property: 'username' },
-        }),
-      );
-    } else if (findPatient?.phoneNumber == createPatientDto.phoneNumber) {
-      throw new BadRequestException(
-        i18n?.t('validation.ALREADY_EXISTS', {
-          args: { property: 'phone number' },
-        }),
-      );
-    } else if (findPatient?.email == createPatientDto.email) {
-      throw new BadRequestException(
-        i18n?.t('validation.ALREADY_EXISTS', {
-          args: { property: 'email' },
-        }),
+        i18n?.t('messages.PHONE_NUMBER_ALREADY_EXISTS'),
       );
     }
     const create = this.patientRepository.create(createPatientDto);

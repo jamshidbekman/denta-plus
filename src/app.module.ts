@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './modules/auth-patients/auth.module';
+import { AuthPatientsModule } from './modules/auth-patients/auth.module';
 import { PatientsModule } from './modules/patients/patients.module';
 import { UsersModule } from './modules/users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -75,7 +75,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
         new CookieResolver(['lang']),
       ],
     }),
-    AuthModule,
+    AuthPatientsModule,
     PatientsModule,
     UsersModule,
   ],

@@ -1,10 +1,17 @@
 {
   "EMAIL_CONFIRMATION_SENT": "A confirmation code has been sent to your email.",
-  "OTP_EXPIRED": "The verification code is incorrect.",
+  "PHONE_CONFIRMATION_SENT": "A confirmation code has been sent to your phone number.",
+  "PHONE_NUMBER_ALREADY_EXISTS": "This phone number is already registered. Please log in.",
+  "OTP_NOT_REQUESTED": "Please request a verification code first.",
+  "OTP_EXPIRED": "The verification code has expired, please try again.",
+  "OTP_INCORRECT": "The verification code is incorrect.",
   "OTP_CONFIRMED": "The verification code is correct. You have been successfully verified.",
   "EMAIL_NOT_VERIFIED": "Your email has not been verified yet. Please verify your email.",
+  "PHONE_NOT_VERIFIED": "Your phone number has not been verified yet. Please verify your phone number.",
   "EMAIL_VERIFIED": "Your email has been successfully verified!",
+  "PHONE_VERIFIED": "Your phone number has been successfully verified!",
   "REGISTRATION_SUCCESS": "You have successfully registered! Welcome!",
   "USER_NOT_REGISTERED": "You are not registered. Please sign up first.",
+  "USER_PHONE_NOT_REGISTERED": "Your phone number is not registered. Please sign up first.",
   "LOGIN_SUCCESS": "You have successfully logged in."
 }
