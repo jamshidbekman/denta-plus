@@ -6,9 +6,15 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
   app.setGlobalPrefix('/api');
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
@@ -37,7 +43,6 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  console.log(await bcrypt.hash('Denta+777', 12));
   const PORT = configService.get('PORT') ?? 3000;
   await app.listen(PORT, () => {
     console.log('Server is running port', PORT);
