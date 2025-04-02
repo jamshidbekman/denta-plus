@@ -13,5 +13,11 @@
   "REGISTRATION_SUCCESS": "You have successfully registered! Welcome!",
   "USER_NOT_REGISTERED": "You are not registered. Please sign up first.",
   "USER_PHONE_NOT_REGISTERED": "Your phone number is not registered. Please sign up first.",
-  "LOGIN_SUCCESS": "You have successfully logged in."
+  "LOGIN_SUCCESS": "You have successfully logged in.",
+  "TOO_MANY_ATTEMPTS": "The number of attempts has expired, please try again later!",
+  "TOKEN_NOT_FOUND": "Token not found!",
+  "TOKEN_INVALID": "Invalid or expired token!",
+  "ACCESS_DENIED": "Access denied!",
+  "USER_NOT_FOUND": "No such user found.",
+  "PASSWORD_INVALID": "The entered password is incorrect."
 }

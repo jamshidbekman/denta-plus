@@ -1,6 +1,6 @@
 {
   "NOT_EMPTY": "{property} cannot be empty",
-  "INVALID_PHONE_NUMBER": "The phone number is invalid! Only Uzbekistan numbers are accepted.",
+  "INVALID_PHONE_NUMBER": "The phone number format is invalid!",
   "INVALID_EMAIL": "The email address is not entered in the correct format.",
   "USER_ALREADY_EXISTS": "This {property} is already taken!",
   "INVALID_FORMAT": "{property} is not entered in the correct format.",

@@ -5,6 +5,7 @@ import { useContainer } from 'class-validator';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as bcrypt from 'bcrypt';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -35,6 +36,8 @@ async function bootstrap() {
   SwaggerModule.setup('/api', app, document);
 
   const configService = app.get(ConfigService);
+
+  console.log(await bcrypt.hash('Denta+777', 12));
   const PORT = configService.get('PORT') ?? 3000;
   await app.listen(PORT, () => {
     console.log('Server is running port', PORT);

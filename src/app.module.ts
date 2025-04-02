@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AuthPatientsModule } from './modules/auth-patients/auth.module';
+import { AuthPatientsModule } from './modules/auth/auth-patients/auth.module';
 import { PatientsModule } from './modules/patients/patients.module';
-import { UsersModule } from './modules/users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configuration } from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -16,6 +15,11 @@ import {
 import { join } from 'path';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { DentistsModule } from './modules/dentists/dentists.module';
+import { AppointmentsModule } from './modules/appointments/appointments.module';
+import { ClinicsModule } from './modules/clinics/clinics.module';
+import { StaffModule } from './modules/staff/staff.module';
+import { AuthStaffModule } from './modules/auth/auth-staff/auth-staff.module';
 
 @Module({
   imports: [
@@ -77,7 +81,11 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
     }),
     AuthPatientsModule,
     PatientsModule,
-    UsersModule,
+    DentistsModule,
+    AppointmentsModule,
+    ClinicsModule,
+    StaffModule,
+    AuthStaffModule,
   ],
   controllers: [],
   providers: [

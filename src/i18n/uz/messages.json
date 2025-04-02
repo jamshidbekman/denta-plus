@@ -13,5 +13,11 @@
   "REGISTRATION_SUCCESS": "Siz muvaffaqiyatli ro‘yxatdan o‘tdingiz! Xush kelibsiz!",
   "USER_NOT_REGISTERED": "Siz ro‘yxatdan o‘tmagansiz. Iltimos, avval ro‘yxatdan o‘ting.",
   "USER_PHONE_NOT_REGISTERED": "Sizning telefon raqamingiz ro‘yxatdan o‘tmagan. Iltimos, avval ro‘yxatdan o‘ting.",
-  "LOGIN_SUCCESS": "Siz muvaffaqiyatli tizimga kirdingiz."
+  "LOGIN_SUCCESS": "Siz muvaffaqiyatli tizimga kirdingiz.",
+  "TOO_MANY_ATTEMPTS": "Urinishlar soni tugadi, Birozdan keyin urinib ko'ring!",
+  "TOKEN_NOT_FOUND": "Token topilmadi!",
+  "TOKEN_INVALID": "Noto‘g‘ri yoki eskirgan token!",
+  "ACCESS_DENIED": "Sizga ruxsat berilmagan!",
+  "USER_NOT_FOUND": "Bunday user topilmadi.",
+  "PASSWORD_INVALID": "Kiritilgan parol noto‘g‘ri!"
 }

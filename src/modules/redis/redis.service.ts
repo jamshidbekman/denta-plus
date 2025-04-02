@@ -69,12 +69,24 @@ export class RedisService {
   }
 
   async setTempUser(user: any, min: number) {
+    const attempts = Number(
+      await this.isCodeRequested(user.phoneNumber || user.phone_number),
+    );
+
+    if (attempts == 3) {
+      throw new Error('too-many-attempts');
+    }
+
     await this.redis.setex(
-      `user:${user.phoneNumber}`,
+      `user:${user.phoneNumber || user.phone_number}`,
       60 * min,
       JSON.stringify(user),
     );
-    await this.redis.setex(`requested:${user.phoneNumber}`, 3600, '1');
+    await this.redis.setex(
+      `requested:${user.phoneNumber || user.phone_number}`,
+      3600,
+      attempts + 1,
+    );
   }
 
   async getTempUser(phoneNumber: string) {
@@ -83,5 +95,9 @@ export class RedisService {
 
   async isCodeRequested(phoneNumber: string) {
     return await this.getKey(`requested:${phoneNumber}`);
+  }
+
+  async delRequests(phoneNumber: string) {
+    await this.delKey(`requested:${phoneNumber}`);
   }
 }

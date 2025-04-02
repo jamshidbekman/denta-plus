@@ -1,20 +1,21 @@
 import {
-  IsDate,
   IsEmail,
   IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
   Matches,
+  MinLength,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
+import { StaffRole } from '../entities/staff.entity';
 
-export class CreatePatientDto {
+export class CreateStaffDto {
   @IsString()
   @IsNotEmpty({
     message: i18nValidationMessage('validation.NOT_EMPTY'),
   })
-  fullName: string;
+  full_name: string;
 
   @IsString()
   @IsNotEmpty({
@@ -23,31 +24,21 @@ export class CreatePatientDto {
   @Matches(/^\+998(90|91|93|94|95|97|98|99|33|88|50)\d{7}$/, {
     message: i18nValidationMessage('validation.INVALID_PHONE_NUMBER'),
   })
-  phoneNumber: string;
+  phone_number: string;
 
   @IsOptional()
   @IsString()
   @IsEmail({}, { message: i18nValidationMessage('validation.INVALID_EMAIL') })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.NOT_EMPTY'),
-  })
   email?: string;
 
-  @IsOptional()
-  @IsDate({
-    message: i18nValidationMessage('validation.INVALID_FORMAT'),
+  @IsString()
+  @MinLength(6, {
+    message: i18nValidationMessage('validation.PASSWORD_MIN_LENGTH'),
   })
-  birthDate?: Date;
+  password: string;
 
-  @IsOptional()
-  @IsString({
-    message: i18nValidationMessage('validation.INVALID_FORMAT'),
+  @IsEnum(StaffRole, {
+    message: i18nValidationMessage('validation.INVALID_ROLE'),
   })
-  adress?: string;
-
-  @IsOptional()
-  @IsString({
-    message: i18nValidationMessage('validation.INVALID_FORMAT'),
-  })
-  gender?: string;
+  role: StaffRole;
 }
