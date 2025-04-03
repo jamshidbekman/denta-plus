@@ -53,6 +53,7 @@ export class AuthStaffService {
 
     const temp_user = {
       ...loginDto,
+      role: findUser.role,
       code,
     };
 

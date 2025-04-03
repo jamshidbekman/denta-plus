@@ -73,7 +73,7 @@ export class RedisService {
       await this.isCodeRequested(user.phoneNumber || user.phone_number),
     );
 
-    if (attempts == 3) {
+    if (user.role !== 'crm-owner' && attempts == 3) {
       throw new Error('too-many-attempts');
     }
 
