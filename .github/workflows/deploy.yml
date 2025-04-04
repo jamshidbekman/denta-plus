@@ -37,48 +37,93 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # Network yaratish (agar mavjud bo'lmasa)
-            docker network create existing-network || true
-
-            # Qolgan deploy skripti o'zgarmaydi
-            cd ~/denta-plus || mkdir -p ~/denta-plus && cd ~/denta-plus
-
-            # Docker Compose faylini yaratish
-            cat > docker-compose.yml << EOL
+            # Application directory
+            mkdir -p ~/denta-plus
+            cd ~/denta-plus
+            
+            # Pull the latest image
+            docker pull ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
+            
+            # Stop and remove current container if exists
+            if [ -f docker-compose.yml ]; then
+              docker-compose down || true
+            fi
+            
+            # Create .env file from GitHub secret
+            printf "%s" "${{ secrets.ENV_FILE }}" > .env
+            
+            # Create or update docker-compose.yml
+            cat > docker-compose.yml << 'EOL'
             version: '3'
+
             services:
               app:
                 image: ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
-                container_name: denta-plus
+                container_name: denta_plus_app
                 restart: always
                 ports:
                   - '4001:4001'
                 env_file:
                   - .env
+                depends_on:
+                  denta_plus_postgres:
+                    condition: service_healthy
+                  denta_plus_redis:
+                    condition: service_healthy
                 networks:
-                  - existing-network
+                  - denta_plus_network
+
+              denta_plus_postgres:
+                image: postgres:16-alpine
+                container_name: denta_plus_postgres
+                ports:
+                  - '5434:5432'
+                environment:
+                  - POSTGRES_USER=${DB_USERNAME}
+                  - POSTGRES_PASSWORD=${DB_PASSWORD}
+                  - POSTGRES_DB=${DB_NAME}
+                volumes:
+                  - denta_plus_postgres_data:/var/lib/postgresql/data
+                networks:
+                  - denta_plus_network
+                healthcheck:
+                  test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+                  interval: 10s
+                  timeout: 5s
+                  retries: 5
+
+              denta_plus_redis:
+                image: redis:7.2-alpine
+                container_name: denta_plus_redis
+                ports:
+                  - '6381:6379'
+                command: redis-server --requirepass ${REDIS_PASSWORD}
+                volumes:
+                  - denta_plus_redis_data:/data
+                networks:
+                  - denta_plus_network
+                healthcheck:
+                  test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+                  interval: 10s
+                  timeout: 5s
+                  retries: 5
+
+            volumes:
+              denta_plus_postgres_data:
+              denta_plus_redis_data:
 
             networks:
-              existing-network:
-                external: true
+              denta_plus_network:
+                driver: bridge
             EOL
-
-            # Eski konteynerlarni to'xtatish
-            docker-compose down
-
-            # .env faylini yangilash
-            printf "%s" "${{ secrets.ENV_FILE }}" > .env
-
-            # Eng so'nggi Docker imagelarini olish
-            docker pull ${{ secrets.DOCKER_USERNAME }}/denta-plus:latest
-
-            # Konteynerlarni ishga tushirish
-            docker-compose up -d --remove-orphans
-
-            # Diskda bo'sh joy ochish
+            
+            # Start the application
+            docker-compose up -d --force-recreate --no-deps
+            
+            # Prune unused images to save disk space
             docker image prune -a -f --filter "until=24h"
-
-            # Servislar holatini tekshirish
+            
+            # Check if application started successfully
             sleep 15
-            docker ps
-            docker logs --tail=30 denta-plus
+            docker ps --filter "name=denta_plus_app"
+            docker-compose logs --tail=30 app
