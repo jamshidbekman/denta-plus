@@ -2,8 +2,11 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsObject,
+  isObject,
   IsOptional,
   IsString,
+  IsUUID,
   Matches,
   MinLength,
 } from 'class-validator';
@@ -36,6 +39,11 @@ export class CreateStaffDto {
     message: i18nValidationMessage('validation.PASSWORD_MIN_LENGTH'),
   })
   password: string;
+
+  @IsObject()
+  clinic: {
+    id: string;
+  };
 
   @IsEnum(StaffRole, {
     message: i18nValidationMessage('validation.INVALID_ROLE'),

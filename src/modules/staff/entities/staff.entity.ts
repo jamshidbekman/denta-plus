@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Clinic } from 'src/modules/clinics/entities/clinic.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 export enum StaffRole {
   CRM_OWNER = 'crm-owner',
@@ -23,6 +31,9 @@ export class Staff {
   @Column()
   password: string;
 
+  @ManyToOne(() => Clinic, (clinic) => clinic.staffs)
+  clinic: Clinic;
+
   @Column({
     type: 'enum',
     enum: StaffRole,
@@ -31,4 +42,10 @@ export class Staff {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
