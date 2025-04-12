@@ -12,7 +12,7 @@ import {
 })
 export class Patient {
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @Column({ length: 50 })
   fullName: string;
@@ -34,6 +34,12 @@ export class Patient {
 
   @Column({ default: true, nullable: true })
   isActive: boolean;
+
+  @Column({
+    nullable: true,
+    default: new Date().toLocaleString(),
+  })
+  last_activity: string;
 
   @CreateDateColumn()
   createdAt: Date;

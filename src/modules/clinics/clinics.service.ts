@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateClinicDto } from './dto/create-clinic.dto';
 import { UpdateClinicDto } from './dto/update-clinic.dto';
@@ -116,6 +117,9 @@ export class ClinicsService {
 
     const clinics = await query.getMany();
 
+    if (clinics.length < 1)
+      throw new NotFoundException('Klinikalar mavjud emas');
+    
     return { message: "Klinikalar ro'yxati", data: clinics };
   }
 }

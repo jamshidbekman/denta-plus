@@ -16,6 +16,16 @@ export class PatientsService {
   async findByEmail(email: string) {
     return await this.patientRepository.findOne({ where: { email: email } });
   }
+
+  async updateLastActivity(id: number) {
+    const patient = await this.patientRepository.findOne({ where: { id: id } });
+
+    if (patient) {
+      patient.last_activity = new Date().toLocaleString();
+      await this.patientRepository.save(patient);
+    }
+  }
+
   async findByPhoneNumber(phoneNumber: string) {
     return await this.patientRepository.findOne({
       where: { phoneNumber: phoneNumber },
@@ -39,5 +49,11 @@ export class PatientsService {
     } catch (error) {
       console.log(error.message);
     }
+  }
+
+  async getAllPatients() {
+    const patients = await this.patientRepository.find();
+
+    return patients;
   }
 }

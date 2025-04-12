@@ -205,6 +205,8 @@ export class AuthPatientsService {
 
     const patient = await this.patientsService.createPatient(patient_data);
 
+    await this.patientsService.updateLastActivity(patient?.id as number);
+
     const payload = { user_id: patient?.id };
 
     const access_token = this.jwtService.sign(payload, { expiresIn: '1h' });
@@ -305,6 +307,8 @@ export class AuthPatientsService {
     const patient = await this.patientsService.findByPhoneNumber(
       verifyDto.phoneNumber,
     );
+
+    await this.patientsService.updateLastActivity(patient?.id as number);
 
     const payload = { user_id: patient?.id };
 

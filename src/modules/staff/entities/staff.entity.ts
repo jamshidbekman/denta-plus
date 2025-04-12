@@ -40,6 +40,9 @@ export class Staff {
   })
   role: StaffRole;
 
+  @Column({ nullable: true, default: new Date().toLocaleString() })
+  last_activity: string;
+
   @Column({ default: true })
   isActive: boolean;
 

@@ -110,6 +110,8 @@ export class AuthStaffService {
     if (getTempUser.code !== loginVerifyDto.code)
       throw new HttpException(i18n?.t('messages.OTP_INCORRECT') as string, 401);
 
+    await this.staffService.updateLastActivity(findUser.id);
+
     const payload = { user_id: findUser?.id, role: findUser.role };
 
     const access_token = this.jwtService.sign(payload, { expiresIn: '1h' });
