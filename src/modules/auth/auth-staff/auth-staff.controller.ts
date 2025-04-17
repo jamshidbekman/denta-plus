@@ -8,11 +8,13 @@ import {
   Delete,
   HttpCode,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthStaffService } from './auth-staff.service';
 import { LoginDto } from './dto/login.dto';
 import { StaffsVerifyPhoneDto } from './dto/verify-phone.dto';
 import { Response } from 'express';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @Controller('auth/staff')
 export class AuthStaffController {
@@ -31,5 +33,13 @@ export class AuthStaffController {
     @Res({ passthrough: true }) res: Response,
   ) {
     return await this.authStaffService.loginVerify(loginVerifyDto, res);
+  }
+
+  @Post('logout')
+  @UseGuards(AuthGuard)
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('access_token');
+    res.clearCookie('refresh_token');
+    return { message: 'Logged out successfully' };
   }
 }

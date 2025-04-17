@@ -119,7 +119,15 @@ export class ClinicsService {
 
     if (clinics.length < 1)
       throw new NotFoundException('Klinikalar mavjud emas');
-    
+
     return { message: "Klinikalar ro'yxati", data: clinics };
+  }
+
+  async getClinicById(id: string) {
+    const findClinic = await this.clinicRepository.findOne({
+      where: { id: id },
+    });
+
+    return findClinic;
   }
 }

@@ -19,5 +19,7 @@
   "TOKEN_INVALID": "Invalid or expired token!",
   "ACCESS_DENIED": "Access denied!",
   "USER_NOT_FOUND": "No such user found.",
-  "PASSWORD_INVALID": "The entered password is incorrect."
+  "PASSWORD_INVALID": "The entered password is incorrect.",
+  "SUCCESS_CREATED": "{property} successfully created!",
+  "NOT_EXIST": "Such a {property} does not exist!"
 }

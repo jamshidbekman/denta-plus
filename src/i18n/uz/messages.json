@@ -19,5 +19,7 @@
   "TOKEN_INVALID": "Noto‘g‘ri yoki eskirgan token!",
   "ACCESS_DENIED": "Sizga ruxsat berilmagan!",
   "USER_NOT_FOUND": "Bunday user topilmadi.",
-  "PASSWORD_INVALID": "Kiritilgan parol noto‘g‘ri!"
+  "PASSWORD_INVALID": "Kiritilgan parol noto‘g‘ri!",
+  "SUCCESS_CREATED": "{property} muvaffaqiyatli yaratildi!",
+  "NOT_EXIST": "Bunday {property} mavjud emas!"
 }

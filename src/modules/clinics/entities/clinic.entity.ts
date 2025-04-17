@@ -1,4 +1,6 @@
+import { Dentist } from 'src/modules/dentists/entities/dentist.entity';
 import { Staff } from 'src/modules/staff/entities/staff.entity';
+import { Treatment } from 'src/modules/treatments/entities/treatment.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -71,6 +73,12 @@ export class Clinic {
   @OneToMany(() => Staff, (staff) => staff.clinic)
   staffs: Staff[];
 
+  @OneToMany(() => Dentist, (dentist) => dentist.clinic)
+  dentists: Dentist[];
+
+  @OneToMany(() => Treatment, (treatment) => treatment.clinic)
+  treatments: Treatment[];
+  
   @CreateDateColumn()
   createdAt: Date;
 

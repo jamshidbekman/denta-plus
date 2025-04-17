@@ -19,5 +19,7 @@
   "TOKEN_INVALID": "Неверный или просроченный токен!",
   "ACCESS_DENIED": "Доступ запрещен!",
   "USER_NOT_FOUND": "Такой пользователь не найден.",
-  "PASSWORD_INVALID": "Введенный пароль неверный."
+  "PASSWORD_INVALID": "Введенный пароль неверный.",
+  "SUCCESS_CREATED": "{property} успешно создан!",
+  "NOT_EXIST": "Такой {property} не существует!"
 }

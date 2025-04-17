@@ -16,10 +16,11 @@ import { join } from 'path';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { DentistsModule } from './modules/dentists/dentists.module';
-import { AppointmentsModule } from './modules/appointments/appointments.module';
 import { ClinicsModule } from './modules/clinics/clinics.module';
 import { StaffModule } from './modules/staff/staff.module';
 import { AuthStaffModule } from './modules/auth/auth-staff/auth-staff.module';
+import { TreatmentsModule } from './modules/treatments/treatments.module';
+import { AppointmentsModule } from './modules/appointments/appointments.module';
 
 @Module({
   imports: [
@@ -86,6 +87,7 @@ import { AuthStaffModule } from './modules/auth/auth-staff/auth-staff.module';
     ClinicsModule,
     StaffModule,
     AuthStaffModule,
+    TreatmentsModule,
   ],
   controllers: [],
   providers: [
